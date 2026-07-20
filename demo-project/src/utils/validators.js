@@ -4,15 +4,37 @@
  */
 
 /**
+ * Checks a local-part or domain segment for a leading dot, trailing dot,
+ * or consecutive dots — all invalid per RFC 5321/5322.
+ *
+ * @param {string} part
+ * @returns {boolean}
+ */
+function hasInvalidDotPlacement(part) {
+  return part.startsWith('.') || part.endsWith('.') || part.includes('..');
+}
+
+/**
  * Validates an email address format.
+ * Enforces RFC 5321 length limits (254 total, 64 local-part) and rejects
+ * leading/trailing/consecutive dots in the local-part or domain.
  *
  * @param {string} email
  * @returns {boolean}
  */
 function validateEmail(email) {
   if (!email || typeof email !== 'string') return false;
+
+  const trimmed = email.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email.trim());
+  if (!emailRegex.test(trimmed)) return false;
+  if (trimmed.length > 254) return false;
+
+  const [localPart, domain] = trimmed.split('@');
+  if (localPart.length > 64) return false;
+  if (hasInvalidDotPlacement(localPart) || hasInvalidDotPlacement(domain)) return false;
+
+  return true;
 }
 
 /**
