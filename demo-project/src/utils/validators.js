@@ -37,16 +37,31 @@ function validateEmail(email) {
   return true;
 }
 
+const MAX_PASSWORD_BYTES = 72; // bcrypt silently truncates input beyond this length
+
+// Small illustrative blocklist of common/breached passwords. A production
+// system should back this with a much larger list (e.g. a breach corpus).
+const COMMON_PASSWORDS = new Set([
+  'password', 'password1', 'password123', '12345678', '123456789', '1234567890',
+  'qwertyui', 'qwerty123', 'letmein1', 'iloveyou', 'admin123', 'welcome1',
+  'monkey123', 'football', 'baseball', 'dragon123', 'master12', 'sunshine1',
+  'princess1', 'trustno1'
+]);
+
 /**
  * Validates a password meets minimum requirements.
- * Requirements: at least 8 characters.
+ * Requirements: 8–72 bytes (bcrypt truncates beyond 72 bytes) and not a
+ * commonly breached/guessable password.
  *
  * @param {string} password
  * @returns {boolean}
  */
 function validatePassword(password) {
   if (!password || typeof password !== 'string') return false;
-  return password.length >= 8;
+  if (password.length < 8) return false;
+  if (Buffer.byteLength(password, 'utf8') > MAX_PASSWORD_BYTES) return false;
+  if (COMMON_PASSWORDS.has(password.toLowerCase())) return false;
+  return true;
 }
 
 /**
