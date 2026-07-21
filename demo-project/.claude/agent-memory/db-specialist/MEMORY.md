@@ -1,0 +1,1 @@
+- [No Prisma schema exists yet](project_no-prisma-schema-yet.md) — repo is fully in-memory (User, RefreshToken implied) despite CLAUDE.md naming Postgres+Prisma

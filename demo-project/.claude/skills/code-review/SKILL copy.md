@@ -15,14 +15,10 @@ When performing a code review, always cover all four dimensions in this order.
 If reviewing a snippet without full context, note assumptions made at the top.
 
 ## 1. Security
-Delegate this dimension to the `security-analyst` subagent using the Task tool.
-Pass it the code being reviewed and ask it to audit for authentication bypass,
-injection vulnerabilities, sensitive data exposure, insecure token handling,
-missing input validation, and dependency risk.
-
-Incorporate its findings into the report below — preserve its OWASP category
-tags and severity ratings rather than re-deriving them. If the subagent finds
-no issues, state that explicitly rather than omitting the section.
+- Check for injection vulnerabilities (SQL, command, path traversal)
+- Verify authentication and authorization on every endpoint
+- Confirm sensitive data is never logged or exposed in responses
+- Flag hardcoded secrets, insecure defaults, or missing input validation
 
 ## 2. Performance
 - Identify N+1 query patterns
