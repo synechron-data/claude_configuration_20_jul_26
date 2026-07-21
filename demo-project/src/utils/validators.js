@@ -65,6 +65,24 @@ function validatePassword(password) {
 }
 
 /**
+ * Validates a password meets minimum strength requirements: at least 10
+ * characters, with at least one uppercase letter, one lowercase letter,
+ * one digit, and one special (non-alphanumeric) character.
+ *
+ * @param {string} password
+ * @returns {boolean}
+ */
+function validatePasswordStrength(password) {
+  if (!password || typeof password !== 'string') return false;
+  if (password.length < 10) return false;
+  if (!/[A-Z]/.test(password)) return false;
+  if (!/[a-z]/.test(password)) return false;
+  if (!/[0-9]/.test(password)) return false;
+  if (!/[^A-Za-z0-9]/.test(password)) return false;
+  return true;
+}
+
+/**
  * Validates a UUID v4 string.
  *
  * @param {string} id
@@ -90,6 +108,7 @@ function sanitizeString(input) {
 module.exports = {
   validateEmail,
   validatePassword,
+  validatePasswordStrength,
   validateUUID,
   sanitizeString
 };

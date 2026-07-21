@@ -1,4 +1,4 @@
-const { validateEmail, validatePassword } = require('../../src/utils/validators');
+const { validateEmail, validatePassword, validatePasswordStrength } = require('../../src/utils/validators');
 
 describe('validateEmail', () => {
   test('accepts a well-formed email', () => {
@@ -102,5 +102,42 @@ describe('validatePassword', () => {
 
   test('accepts a non-common password that meets length requirements', () => {
     expect(validatePassword('xK9#mQ2vLp')).toBe(true);
+  });
+});
+
+describe('validatePasswordStrength', () => {
+  test('rejects non-string input', () => {
+    expect(validatePasswordStrength(null)).toBe(false);
+    expect(validatePasswordStrength(undefined)).toBe(false);
+    expect(validatePasswordStrength('')).toBe(false);
+    expect(validatePasswordStrength(12345678)).toBe(false);
+  });
+
+  test('rejects passwords shorter than 10 characters', () => {
+    expect(validatePasswordStrength('Sh0rt!')).toBe(false);
+  });
+
+  test('accepts a password of exactly 10 characters meeting all requirements', () => {
+    expect(validatePasswordStrength('Abcdef1$gh')).toBe(true);
+  });
+
+  test('rejects a password missing an uppercase letter', () => {
+    expect(validatePasswordStrength('abcdef1$gh')).toBe(false);
+  });
+
+  test('rejects a password missing a lowercase letter', () => {
+    expect(validatePasswordStrength('ABCDEF1$GH')).toBe(false);
+  });
+
+  test('rejects a password missing a digit', () => {
+    expect(validatePasswordStrength('Abcdefgh$i')).toBe(false);
+  });
+
+  test('rejects a password missing a special character', () => {
+    expect(validatePasswordStrength('Abcdefgh1i')).toBe(false);
+  });
+
+  test('accepts a longer password meeting all requirements', () => {
+    expect(validatePasswordStrength('Tr0ub4dor&3xtra')).toBe(true);
   });
 });
