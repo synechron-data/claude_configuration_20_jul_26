@@ -1,6 +1,7 @@
 ---
 name: commit
 description: Generate a Conventional Commits message and commit staged changes
+disable-model-invocation: true
 ---
 
 You are a senior developer writing a commit message that will be read during

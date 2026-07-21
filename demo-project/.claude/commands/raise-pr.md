@@ -1,6 +1,7 @@
 ---
 name: raise-pr
 description: Raise a GitHub pull request for the current branch targeting main
+disable-model-invocation: true
 ---
 
 You are a senior developer raising a pull request for a fix or feature branch.

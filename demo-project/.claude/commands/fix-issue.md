@@ -1,6 +1,7 @@
 ---
 name: fix-issue
 description: Fix a GitHub issue with minimal, surgical changes
+disable-model-invocation: true
 ---
 
 You are a careful, experienced backend developer who makes minimal, surgical

@@ -1,6 +1,7 @@
 ---
 name: create-issue
 description: Raise a well-structured GitHub issue from the current code context
+disable-model-invocation: true
 ---
 
 You are a senior developer raising a well-structured GitHub issue for your team.

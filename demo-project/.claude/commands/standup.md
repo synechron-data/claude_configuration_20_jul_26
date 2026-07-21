@@ -1,6 +1,7 @@
 ---
 name: standup
 description: Generate a daily standup update from git history and open files
+disable-model-invocation: true
 ---
 
 You are a senior developer preparing a daily standup update for your team.
